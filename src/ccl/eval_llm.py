@@ -39,11 +39,7 @@ def _f1(pred: str, gold: str) -> float:
     return 2 * prec * rec / (prec + rec)
 
 
-def task_accuracy(items: list[Item], compressor: Compressor, *, threshold: float = 0.5) -> float:
-    """Mean fraction of questions answered correctly from the compressed passage."""
-    import anthropic
-
-    client = anthropic.Anthropic()
+def _accuracy_once(client, items: list[Item], compressor: Compressor, threshold: float) -> float:
     correct = 0
     for it in items:
         context = compressor.compress(it.passage)
@@ -62,3 +58,26 @@ def task_accuracy(items: list[Item], compressor: Compressor, *, threshold: float
         if _f1(answer, it.answer) >= threshold:
             correct += 1
     return correct / len(items) if items else 0.0
+
+
+def task_accuracy(
+    items: list[Item], compressor: Compressor, *, threshold: float = 0.5, runs: int = 1
+) -> dict:
+    """Downstream QA accuracy from the compressed passage, averaged over `runs`.
+
+    LLM answers vary call to call, so a single pass is not trustworthy. Running
+    several passes and reporting the mean plus the spread (min/max) shows whether
+    a method's accuracy is stable, which is the difference between a number you
+    can quote to a stakeholder and one you can't. Returns
+    {mean, min, max, runs}, all as fractions in [0, 1].
+    """
+    import anthropic
+
+    client = anthropic.Anthropic()
+    scores = [_accuracy_once(client, items, compressor, threshold) for _ in range(max(1, runs))]
+    return {
+        "mean": sum(scores) / len(scores),
+        "min": min(scores),
+        "max": max(scores),
+        "runs": len(scores),
+    }

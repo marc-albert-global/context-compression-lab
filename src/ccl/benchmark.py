@@ -62,7 +62,9 @@ def run(*, embedding: bool = False, methods: list[str] | None = None) -> list[Re
     return results
 
 
-def add_task_accuracy(results: list[Result], *, methods: list[str] | None = None) -> list[Result]:
+def add_task_accuracy(
+    results: list[Result], *, methods: list[str] | None = None, runs: int = 1
+) -> list[Result]:
     """Augment results with LLM-based downstream task accuracy (optional)."""
     from . import eval_llm
 
@@ -76,7 +78,8 @@ def add_task_accuracy(results: list[Result], *, methods: list[str] | None = None
             continue
         if methods is not None and name not in methods:
             continue
-        r.task_accuracy = round(eval_llm.task_accuracy(items, comps[name]) * 100, 1)
+        acc = eval_llm.task_accuracy(items, comps[name], runs=runs)
+        r.task_accuracy = round(acc["mean"] * 100, 1)
     return results
 
 

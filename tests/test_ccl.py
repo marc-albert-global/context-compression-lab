@@ -2,8 +2,27 @@
 
 import pytest
 
-from ccl import benchmark, corpus, count_tokens, metrics
+from ccl import benchmark, corpus, cost, count_tokens, metrics
 from ccl.compressors import available, get
+
+
+def test_cost_projection_math():
+    s = cost.project_saving("demo", 30.0, daily_input_tokens=1_000_000, price_per_million=5.0)
+    assert s.tokens_saved_per_day == 300_000
+    assert s.usd_saved_per_day == pytest.approx(1.5, abs=0.01)
+    assert s.usd_saved_per_year == pytest.approx(547, abs=1)
+
+
+def test_cost_excludes_baseline_and_non_savers():
+    results = benchmark.run()
+    savings = cost.project_all(results)
+    names = {s.method for s in savings}
+    assert "identity" not in names          # baseline saves nothing
+    assert "stem" not in names              # negative reduction saves nothing
+    assert "stopwords" in names
+    # Sorted by annual saving, descending.
+    yrs = [s.usd_saved_per_year for s in savings]
+    assert yrs == sorted(yrs, reverse=True)
 
 
 def test_corpus_loads():

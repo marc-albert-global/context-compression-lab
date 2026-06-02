@@ -28,7 +28,12 @@ def main(argv: list[str] | None = None) -> int:
     pb = sub.add_parser("bench", help="Run the full benchmark.")
     pb.add_argument("--embedding", action="store_true", help="Add embedding-cosine metric (needs embed extra).")
     pb.add_argument("--llm-eval", action="store_true", help="Add Claude task-accuracy (needs llm extra + key).")
+    pb.add_argument("--runs", type=int, default=3, help="LLM eval passes to average (default 3).")
     pb.add_argument("--methods", help="Comma-separated subset of method names.")
+
+    px = sub.add_parser("cost", help="Project $ savings at a given volume and token price.")
+    px.add_argument("--volume", type=int, default=1_000_000, help="Input tokens per day (default 1,000,000).")
+    px.add_argument("--price", type=float, default=5.0, help="USD per 1M input tokens (default 5.0).")
 
     args = parser.parse_args(argv)
 
@@ -52,11 +57,20 @@ def main(argv: list[str] | None = None) -> int:
         methods = args.methods.split(",") if args.methods else None
         results = benchmark.run(embedding=args.embedding, methods=methods)
         if args.llm_eval:
-            print("Running LLM task-accuracy eval (this calls the API)...", file=sys.stderr)
-            benchmark.add_task_accuracy(results, methods=methods)
+            print(f"Running LLM task-accuracy eval, {args.runs} run(s) (this calls the API)...",
+                  file=sys.stderr)
+            benchmark.add_task_accuracy(results, methods=methods, runs=args.runs)
         report.write_all(results)
         print(report.markdown_table(results))
         print("\nFigures written to reports/figures/, table to reports/results.md")
+        return 0
+
+    if args.command == "cost":
+        from . import cost
+
+        results = benchmark.run()
+        savings = cost.project_all(results, daily_input_tokens=args.volume, price_per_million=args.price)
+        print(cost.markdown_table(savings, daily_input_tokens=args.volume, price_per_million=args.price))
         return 0
 
     parser.print_help()
