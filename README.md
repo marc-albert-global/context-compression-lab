@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/marc-albert-global/context-compression-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/marc-albert-global/context-compression-lab/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
+![lint: ruff](https://img.shields.io/badge/lint-ruff-261230)
+![types: mypy](https://img.shields.io/badge/types-mypy-2a6db2)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
 **Cut the token bill of a GenAI application without quietly breaking it.** This
@@ -127,7 +129,7 @@ ccl methods                                  # list compressors
 ccl compress -m stopwords "The cat sat on the mat in the warm afternoon sun."
 ccl bench                                    # full benchmark -> reports/ + figures
 ccl cost --volume 10000000                   # project savings at your scale
-pytest -q                                    # 11 tests, offline
+ruff check src tests && mypy && pytest -q    # lint + type-check + 11 tests, offline
 ```
 
 ## Add a method (the continuous-research part)

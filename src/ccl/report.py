@@ -73,7 +73,7 @@ def _plot_pareto(results: list[Result]) -> None:
         ax.annotate(r.method, (r.token_reduction, r.preservation),
                     textcoords="offset points", xytext=(6, 4), fontsize=8)
     # Pareto frontier: points not dominated on both axes.
-    frontier = []
+    frontier: list[Result] = []
     for r in sorted(pts, key=lambda x: x.token_reduction, reverse=True):
         if all(r.preservation >= f.preservation for f in frontier):
             frontier.append(r)
@@ -86,7 +86,9 @@ def _plot_pareto(results: list[Result]) -> None:
     ax.set_ylabel("Context preservation % (higher = more faithful)")
     ax.set_title("Compression methods: efficiency vs. fidelity")
     ax.grid(alpha=0.3)
-    fig.tight_layout(); fig.savefig(FIG_DIR / "pareto.png", dpi=130); plt.close(fig)
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "pareto.png", dpi=130)
+    plt.close(fig)
 
 
 def _plot_token_vs_char() -> None:
@@ -99,8 +101,10 @@ def _plot_token_vs_char() -> None:
         co = ct = oo = ot = 0
         for it in items:
             c = comp.compress(it.passage)
-            oo += len(it.passage); co += len(c)
-            ot += count_tokens(it.passage); ct += count_tokens(c)
+            oo += len(it.passage)
+            co += len(c)
+            ot += count_tokens(it.passage)
+            ct += count_tokens(c)
         char_red.append((1 - co / oo) * 100)
         tok_red.append((1 - ct / ot) * 100)
 
@@ -111,8 +115,15 @@ def _plot_token_vs_char() -> None:
     ax.bar(x - 0.2, char_red, 0.4, label="character reduction %", color="#93c5fd")
     ax.bar(x + 0.2, tok_red, 0.4, label="token reduction %", color="#2563eb")
     ax.axhline(0, color="#374151", lw=0.8)
-    ax.set_xticks(x); ax.set_xticklabels(methods, rotation=15)
+    ax.set_xticks(x)
+    ax.set_xticklabels(methods, rotation=15)
     ax.set_ylabel("reduction %")
-    ax.set_title("Characters saved ≠ tokens saved (BPE effect)\nstemming cuts characters but barely tokens")
-    ax.legend(); ax.grid(alpha=0.25, axis="y")
-    fig.tight_layout(); fig.savefig(FIG_DIR / "token_vs_char.png", dpi=130); plt.close(fig)
+    ax.set_title(
+        "Characters saved is not tokens saved (BPE effect)\n"
+        "stemming cuts characters but barely tokens"
+    )
+    ax.legend()
+    ax.grid(alpha=0.25, axis="y")
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "token_vs_char.png", dpi=130)
+    plt.close(fig)

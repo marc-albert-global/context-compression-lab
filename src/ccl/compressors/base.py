@@ -13,7 +13,7 @@ in LITERATURE.md rather than implemented.
 
 from __future__ import annotations
 
-_REGISTRY: dict[str, "Compressor"] = {}
+_REGISTRY: dict[str, Compressor] = {}
 
 
 class Compressor:
@@ -42,10 +42,10 @@ def register(cls: type[Compressor]) -> type[Compressor]:
     return cls
 
 
-def get(name: str) -> "Compressor":
+def get(name: str) -> Compressor:
     return _REGISTRY[name]
 
 
-def available() -> list["Compressor"]:
+def available() -> list[Compressor]:
     """All registered compressors, baseline first then alphabetical."""
     return sorted(_REGISTRY.values(), key=lambda c: (c.name != "identity", c.name))

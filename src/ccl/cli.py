@@ -26,8 +26,8 @@ def main(argv: list[str] | None = None) -> int:
     pc.add_argument("--method", "-m", required=True)
 
     pb = sub.add_parser("bench", help="Run the full benchmark.")
-    pb.add_argument("--embedding", action="store_true", help="Add embedding-cosine metric (needs embed extra).")
-    pb.add_argument("--llm-eval", action="store_true", help="Add Claude task-accuracy (needs llm extra + key).")
+    pb.add_argument("--embedding", action="store_true", help="Add embedding-cosine metric (embed extra).")
+    pb.add_argument("--llm-eval", action="store_true", help="Add Claude task-accuracy (llm extra + key).")
     pb.add_argument("--runs", type=int, default=3, help="LLM eval passes to average (default 3).")
     pb.add_argument("--methods", help="Comma-separated subset of method names.")
 

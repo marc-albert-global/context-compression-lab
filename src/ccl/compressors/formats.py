@@ -12,7 +12,6 @@ import re
 
 from .base import Compressor, register
 from .extractive import _split_sentences
-from .lexical import _join
 
 # Leading connective phrases that add no information at the start of a sentence.
 _FILLER_PREFIX = re.compile(

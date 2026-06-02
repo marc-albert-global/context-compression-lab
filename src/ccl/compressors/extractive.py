@@ -86,7 +86,6 @@ class TextRankSelector(Compressor):
         for _ in range(30):  # power iteration
             new = []
             for i in range(n):
-                tot = sum(sim[i])
                 inbound = sum(sim[i][j] / (sum(sim[j]) or 1e-9) * scores[j] for j in range(n) if j != i)
                 new.append((1 - d) + d * inbound)
             scores = new

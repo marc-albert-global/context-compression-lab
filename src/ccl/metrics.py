@@ -68,7 +68,7 @@ def rouge_l_f1(original: str, compressed: str) -> float:
 def embedding_cosine_pct(original: str, compressed: str) -> float | None:
     """Optional: sentence-embedding cosine similarity. Needs the `embed` extra."""
     try:
-        from sentence_transformers import SentenceTransformer, util
+        from sentence_transformers import util
     except Exception:
         return None
     model = _embed_model()

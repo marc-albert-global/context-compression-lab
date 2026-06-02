@@ -9,7 +9,6 @@ F1 ≥ 0.5). Requires `pip install '.[llm]'` and ANTHROPIC_API_KEY.
 
 from __future__ import annotations
 
-import re
 import string
 
 from .compressors.base import Compressor
