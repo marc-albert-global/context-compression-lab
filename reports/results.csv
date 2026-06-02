@@ -1,0 +1,13 @@
+method,category,available,token_reduction,preservation,entity_retention,rouge_l,content_jaccard,embedding_cosine,task_accuracy
+identity,baseline,True,0.0,100.0,100.0,100.0,100.0,,
+bullets,format/rewrite,True,-1.6,97.8,95.9,99.7,99.5,,
+dedupe,format/filtering,True,0.0,100.0,100.0,100.0,100.0,,
+llm-abstractive,paraphrasing/LLM (external),False,0.0,0.0,0.0,0.0,0.0,,
+llmlingua2,filtering/learned (external),False,0.0,0.0,0.0,0.0,0.0,,
+punctuation,lexical/normalization,True,8.3,95.3,93.3,97.3,93.5,,
+self-information,filtering/information-theoretic,True,34.3,71.7,71.9,71.4,87.5,,
+stem,lexical/normalization,True,-6.7,46.7,13.5,79.8,50.6,,
+stopwords,lexical/filtering,True,29.1,73.8,72.6,75.0,100.0,,
+textrank-extractive,extractive/filtering,True,34.9,71.4,66.6,76.2,65.3,,
+tfidf-extractive,extractive/filtering,True,34.7,70.7,63.5,77.9,71.8,,
+whitespace,lexical/normalization,True,0.0,100.0,100.0,100.0,100.0,,

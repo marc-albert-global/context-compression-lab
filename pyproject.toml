@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "context-compression-lab"
+version = "0.1.0"
+description = "A benchmark lab for token minimization: run many context-compression methods and measure token reduction vs. context preservation."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Marc Albert" }]
+requires-python = ">=3.9"
+dependencies = ["tiktoken>=0.5", "matplotlib>=3.6", "numpy>=1.23"]
+
+[project.optional-dependencies]
+embed = ["sentence-transformers>=2.2"]
+llmlingua = ["llmlingua>=0.2"]
+llm = ["anthropic>=0.40"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+ccl = "ccl.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
