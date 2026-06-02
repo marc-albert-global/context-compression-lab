@@ -1,7 +1,7 @@
 """Optional downstream-accuracy evaluation with Claude.
 
 The offline metrics measure *surface* preservation. This measures whether the
-compressed text still lets a model answer questions about it — the real test of
+compressed text still lets a model answer questions about it, the real test of
 "did we keep the context". For each item we give Claude the compressed passage
 plus the question and check whether the gold answer is recovered (token-level
 F1 ≥ 0.5). Requires `pip install '.[llm]'` and ANTHROPIC_API_KEY.

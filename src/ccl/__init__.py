@@ -1,4 +1,4 @@
-"""context-compression-lab (ccl) — a benchmark lab for token minimization.
+"""context-compression-lab (ccl), a benchmark lab for token minimization.
 
 Run many text-compression methods over a corpus and measure, as percentages,
 how much each reduces tokens versus how much context it preserves.

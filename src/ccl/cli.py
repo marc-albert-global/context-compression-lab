@@ -35,7 +35,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "methods":
         print(f"Tokenizer: {tokenizer_name()}\n")
         for c in available():
-            tag = "" if c.is_available() else f"  (unavailable — needs '{c.requires_extra}')"
+            tag = "" if c.is_available() else f"  (unavailable, needs '{c.requires_extra}')"
             print(f"  {c.name:<20} {c.category}{tag}")
         return 0
 

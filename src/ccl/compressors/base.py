@@ -1,7 +1,7 @@
 """The Compressor interface and registry.
 
 A compressor takes text and returns shorter text. Registering one with
-``@register`` makes it appear automatically in the benchmark — that pluggability
+``@register`` makes it appear automatically in the benchmark, that pluggability
 is the backbone of this as a *continuous* research lab: adding a method is one
 class and one decorator.
 

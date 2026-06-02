@@ -1,7 +1,7 @@
 """Token counting.
 
 Uses a real BPE tokenizer (`tiktoken`, OpenAI's `cl100k_base`) so that
-byte-pair-encoding effects are genuine — most importantly the counterintuitive
+byte-pair-encoding effects are genuine, most importantly the counterintuitive
 result that lemmatization/stemming can *increase* token count by producing word
 forms the merges don't cover. If tiktoken can't load (no cached vocab, offline),
 we fall back to a GPT-style regex pre-tokenizer so the lab still runs; the

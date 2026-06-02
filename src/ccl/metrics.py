@@ -1,7 +1,7 @@
 """Metrics: efficiency (token reduction) and information preservation.
 
 Following the evaluation literature (arXiv 2503.19114), preservation is
-measured with cheap, offline proxies — entity retention and lexical overlap —
+measured with cheap, offline proxies (entity retention and lexical overlap)
 which are useful but, crucially, *not* a guarantee of downstream task accuracy.
 That gap is exactly what the optional LLM task-eval (`eval_llm.py`) exposes.
 """

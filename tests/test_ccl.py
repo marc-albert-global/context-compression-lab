@@ -1,4 +1,4 @@
-"""Core tests — run offline on the committed corpus."""
+"""Core tests, run offline on the committed corpus."""
 
 import pytest
 

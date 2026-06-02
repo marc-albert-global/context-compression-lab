@@ -7,7 +7,7 @@
 A benchmark lab for **token minimization**: run many text-compression methods
 over a corpus and measure, as percentages, how much each one **reduces tokens**
 versus how much **context it preserves**. An ongoing, pluggable research project
-— covering classic NLP preprocessing, syntactic and statistical filtering,
+- covering classic NLP preprocessing, syntactic and statistical filtering,
 format rewriting, and (optionally) a SOTA learned compressor and an LLM rewriter.
 
 The companion [**LITERATURE.md**](LITERATURE.md) surveys the whole field
@@ -28,8 +28,8 @@ Corpus: 30 SQuAD passages. Tokenizer: real BPE (`tiktoken/cl100k_base`).
 | `self-information` | info-theoretic | 34.3 | 71.7 | 71.9 |
 | `stopwords` | lexical filtering | 29.1 | 73.8 | 72.6 |
 | `punctuation` | normalization | 8.3 | **95.3** | 93.3 |
-| `bullets` | format rewrite | −1.6 | 97.8 | 95.9 |
-| `stem` | normalization | **−6.7** | 46.7 | 13.5 |
+| `bullets` | format rewrite | -1.6 | 97.8 | 95.9 |
+| `stem` | normalization | **-6.7** | 46.7 | 13.5 |
 
 Two findings jump out:
 
@@ -40,8 +40,8 @@ the trade-off explicit:
 
 ![Pareto frontier](reports/figures/pareto.png)
 
-**2. Stemming backfires.** Aggressive stemming *increases* token count (−6.7%
-"reduction") and shreds entities (13.5% retained) — because normalizing word
+**2. Stemming backfires.** Aggressive stemming *increases* token count (-6.7%
+"reduction") and shreds entities (13.5% retained), because normalizing word
 forms produces strings the BPE merges don't cover, which fragment into *more*
 tokens. Characters saved ≠ tokens saved:
 
@@ -50,7 +50,7 @@ tokens. Characters saved ≠ tokens saved:
 > A caveat the lab is built to surface: **semantic similarity does not
 > guarantee downstream task accuracy** (see LITERATURE.md). That's why an
 > optional LLM task-eval measures whether a model can still *answer questions*
-> from the compressed text — the only test that catches the gap.
+> from the compressed text, the only test that catches the gap.
 
 ---
 
