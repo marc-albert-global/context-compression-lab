@@ -16,7 +16,7 @@ dependencies = ["tiktoken>=0.5", "matplotlib>=3.6", "numpy>=1.23"]
 embed = ["sentence-transformers>=2.2"]
 llmlingua = ["llmlingua>=0.2"]
 llm = ["anthropic>=0.40"]
-dev = ["pytest>=7", "ruff>=0.6", "mypy>=1.8"]
+dev = ["pytest>=7", "ruff>=0.6", "mypy>=1.8,<2"]
 
 [project.scripts]
 ccl = "ccl.cli:main"

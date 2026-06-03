@@ -78,7 +78,7 @@ def embedding_cosine_pct(original: str, compressed: str) -> float | None:
     return float(util.cos_sim(emb[0], emb[1])) * 100
 
 
-_EMBED = {}
+_EMBED: dict = {}  # lazy one-slot cache for the optional embedding model
 
 
 def _embed_model():
